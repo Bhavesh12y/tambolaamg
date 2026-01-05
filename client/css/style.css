@@ -345,3 +345,63 @@ button:disabled {
         height: 100px; /* Shorter history on mobile */
     }
 }
+/* --- LEADERBOARD & SCORES --- */
+.player-score {
+    font-size: 0.75rem;
+    color: #fbbf24; /* Gold color */
+    font-weight: bold;
+    margin-top: 2px;
+}
+
+/* --- CLAIM BUTTONS GRID (Updated) --- */
+#claims-area, #host-claims {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 8px;
+    margin-top: 20px;
+}
+
+#claims-area button, #host-claims button {
+    font-size: 0.8rem;
+    padding: 10px 5px;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 50px;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+/* Style for taken prizes */
+button.taken {
+    background: #333 !important;
+    color: #666 !important;
+    border-color: #444 !important;
+    cursor: not-allowed;
+    text-decoration: line-through;
+    opacity: 0.6;
+}
+
+/* Winner Overlay */
+.winner-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.9);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    animation: fadeIn 0.5s;
+}
+
+.trophy-icon {
+    font-size: 5rem;
+    margin-bottom: 20px;
+    animation: bounce 1s infinite;
+}
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}

@@ -31,13 +31,24 @@
         <div id="host-play-section">
             <button id="btn-get-ticket" onclick="getHostTicket()">🎟️ Play as Host</button>
             <div id="host-ticket-container" class="ticket-grid hidden"></div>
-            <div id="host-claims" class="hidden">
-                <button onclick="claim('EARLY_FIVE')">Early 5</button>
-                <button onclick="claim('TOP_ROW')">Top Row</button>
-                <button onclick="claim('MIDDLE_ROW')">Middle Row</button>
-                <button onclick="claim('BOTTOM_ROW')">Bottom Row</button>
-                <button onclick="claim('FULL_HOUSE')">Full House</button>
-            </div>
+           <div id="claims-area" class="hidden">
+        <button id="btn-LADDU" onclick="claim('LADDU')">🍩 Laddu (1pt)</button>
+        <button id="btn-EARLY_FIVE" onclick="claim('EARLY_FIVE')">⚡ Early 5 (1pt)</button>
+        
+        <button id="btn-TOP_ROW" onclick="claim('TOP_ROW')">Row 1 (2pt)</button>
+        <button id="btn-MIDDLE_ROW" onclick="claim('MIDDLE_ROW')">Row 2 (2pt)</button>
+        <button id="btn-BOTTOM_ROW" onclick="claim('BOTTOM_ROW')">Row 3 (2pt)</button>
+        
+        <button id="btn-KING_CORNERS" onclick="claim('KING_CORNERS')">👑 King Crnr</button>
+        <button id="btn-QUEEN_CORNERS" onclick="claim('QUEEN_CORNERS')">👸 Queen Crnr</button>
+        <button id="btn-CORNERS" onclick="claim('CORNERS')">🔲 All 4 Crnr</button>
+        
+        <button id="btn-SMALLEST_5" onclick="claim('SMALLEST_5')">🐜 Small 5</button>
+        <button id="btn-BIGGEST_5" onclick="claim('BIGGEST_5')">🐘 Big 5</button>
+        <button id="btn-RULE_123" onclick="claim('RULE_123')">🔢 1-2-3</button>
+        
+        <button id="btn-FULL_HOUSE" style="background:linear-gradient(45deg, gold, orange); color:black;" onclick="claim('FULL_HOUSE')">🏠 HOUSE (5pt)</button>
+    </div>
         </div>
 
         <div id="board" class="board-grid"></div>
@@ -52,6 +63,29 @@
             <button class="quick-btn" onclick="sendChat('Congratulations!')">Congrats!</button>
         </div>
     </div>
+    <button id="info-btn" onclick="toggleRules()">ℹ️</button>
+
+<div id="rules-modal" class="hidden">
+    <div class="rules-content">
+        <span class="close-btn" onclick="toggleRules()">&times;</span>
+        <h2>📜 Game Rules & Scores</h2>
+        <ul style="padding-left: 0; list-style: none;">
+            <li><strong>🍩 Laddu (1pt):</strong> Middle number (Row 2, Col 5).</li>
+            <li><strong>⚡ Early 5 (1pt):</strong> First 5 numbers marked anywhere.</li>
+            <li><strong>🐜 Small 5 (1pt):</strong> Smallest 5 numbers on ticket.</li>
+            <li><strong>🐘 Big 5 (1pt):</strong> Biggest 5 numbers on ticket.</li>
+            <li><strong>👑 King Corners (1pt):</strong> First & Last number of Top Row.</li>
+            <li><strong>👸 Queen Corners (1pt):</strong> First & Last number of Bottom Row.</li>
+            <li><strong>🔲 All Corners (2pts):</strong> All 4 corners (King + Queen).</li>
+            <li><strong>🔢 1-2-3 (2pts):</strong> 1 from Top, 2 from Middle, 3 from Bottom row.</li>
+            <li><strong>➖ Rows (2pts):</strong> All 5 numbers in a specific row.</li>
+            <li><strong>🏠 Full House (5pts):</strong> All 15 numbers marked. (Wins Game)</li>
+        </ul>
+        <p style="text-align: center; color: #aaa; font-size: 0.9rem; margin-top: 15px;">
+            <em>⚠️ Note: Prizes are First Come, First Served!<br>Buttons turn grey if taken.</em>
+        </p>
+    </div>
+</div>
 
     <script src="js/host.js"></script>
 </body>
