@@ -3,22 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <title>Player - Tambola</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <script src="/socket.io/socket.io.js"></script>
 </head>
 <body>
     <h2 id="status">Waiting for Host...</h2>
-    <div id="last-call">Last Call: <span id="current-num-display">--</span></div>
+    
+    <div id="players-list" class="player-strip"></div>
+
+    <div id="current-num-display">--</div>
     
     <div id="ticket-container" class="ticket-grid"></div>
 
     <div id="claims-area" class="hidden">
-        <h3>Claims</h3>
         <button onclick="claim('EARLY_FIVE')">Early 5</button>
         <button onclick="claim('TOP_ROW')">Top Row</button>
         <button onclick="claim('MIDDLE_ROW')">Middle Row</button>
         <button onclick="claim('BOTTOM_ROW')">Bottom Row</button>
         <button onclick="claim('FULL_HOUSE')">Full House</button>
+    </div>
+
+    <h3 style="margin-top:20px; color:#aaa;">Called Numbers</h3>
+    <div id="board" class="board-grid mini-board"></div>
+
+    <div class="chat-section">
+        <div class="chat-messages" id="chat-history"></div>
+        <div class="quick-actions">
+            <button class="quick-btn" onclick="sendChat('Bingo!')">Bingo!</button>
+            <button class="quick-btn" onclick="sendChat('Waiting...')">Waiting...</button>
+            <button class="quick-btn" onclick="sendChat('Fast please!')">Fast!</button>
+            <button class="quick-btn" onclick="sendChat('Slow down!')">Slow!</button>
+        </div>
     </div>
 
     <script src="js/player.js"></script>

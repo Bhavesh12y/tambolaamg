@@ -215,6 +215,107 @@ button:disabled {
     filter: drop-shadow(0 0 12px rgba(99, 102, 241, 0.4));
 }
 
+/* --- PLAYER LIST ICONS --- */
+.player-strip {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 20px 0;
+    flex-wrap: wrap;
+}
+
+.player-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 60px;
+}
+
+.avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: #333;
+    border: 2px solid rgba(255,255,255,0.2);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    font-size: 1.2rem;
+}
+
+.player-name {
+    font-size: 0.8rem;
+    margin-top: 5px;
+    color: var(--text-muted);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;
+}
+
+/* --- QUICK CHAT --- */
+.chat-section {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 300px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(15px);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    z-index: 100;
+}
+
+.chat-messages {
+    height: 150px;
+    overflow-y: auto;
+    margin-bottom: 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    font-size: 0.9rem;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.chat-msg {
+    background: rgba(255,255,255,0.05);
+    padding: 5px 10px;
+    border-radius: 8px;
+    text-align: left;
+}
+
+.chat-msg strong { color: var(--accent-glow); }
+
+.quick-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
+}
+
+.quick-btn {
+    padding: 8px;
+    font-size: 0.8rem;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: #fff;
+    cursor: pointer;
+    border-radius: 8px;
+}
+.quick-btn:hover { background: var(--accent-glow); }
+
+/* --- PLAYER FULL BOARD (Mini) --- */
+.mini-board {
+    transform: scale(0.8);
+    margin-top: -20px;
+}
+
 /* ---------- STATUS ---------- */
 #status {
     font-size: 1.3rem;

@@ -3,47 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <title>Host - Tambola</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <script src="/socket.io/socket.io.js"></script>
-    <style>
-        /* Specific Host Styles */
-        .controls { margin: 20px; display: flex; justify-content: center; gap: 10px; }
-        .control-btn { padding: 15px 30px; font-size: 1.2rem; border-radius: 50px; cursor: pointer; border: none; }
-        .btn-play { background-color: #2ecc71; color: white; }
-        .btn-pause { background-color: #e74c3c; color: white; }
-        .btn-ticket { background-color: #f1c40f; color: black; }
-        
-        #host-ticket-area { margin-top: 30px; border-top: 2px dashed #ccc; padding-top: 20px; }
-        .hidden { display: none !important; }
-    </style>
 </head>
 <body>
-    <h1>Host Dashboard</h1>
-    <h3>Game Code: <span id="game-code-display">Generating...</span></h3>
     
-    <div id="current-number">--</div>
-    
-    <div class="controls">
-        <button id="btn-start" class="control-btn" onclick="startGame()">Start Game</button>
-        
-        <button id="btn-play" class="control-btn btn-play hidden" onclick="togglePlay(true)">▶ Play</button>
-        <button id="btn-pause" class="control-btn btn-pause hidden" onclick="togglePlay(false)">⏸ Pause</button>
+    <div id="lobby-section" class="container">
+        <h1>Host Setup</h1>
+        <input type="text" id="hostNameInput" placeholder="Enter Your Name">
+        <button onclick="createGame()">Create Game Room</button>
     </div>
 
-    <div id="host-play-section">
-        <button id="btn-get-ticket" class="control-btn btn-ticket" onclick="getHostTicket()">🎟️ Play as Host (Get Ticket)</button>
-        <div id="host-ticket-container" class="ticket-grid hidden"></div>
+    <div id="game-dashboard" class="hidden">
+        <h1>Game Code: <span id="game-code-display" style="color:var(--accent-glow)">...</span></h1>
         
-        <div id="host-claims" class="hidden">
-            <button onclick="claim('EARLY_FIVE')">Early 5</button>
-            <button onclick="claim('TOP_ROW')">Top Row</button>
-            <button onclick="claim('MIDDLE_ROW')">Middle Row</button>
-            <button onclick="claim('BOTTOM_ROW')">Bottom Row</button>
-            <button onclick="claim('FULL_HOUSE')">Full House</button>
+        <div id="players-list" class="player-strip"></div>
+
+        <div id="current-number">--</div>
+        
+        <div class="controls" style="display:flex; justify-content:center; gap:10px;">
+            <button id="btn-start" onclick="startGame()">Start Game</button>
+            <button id="btn-play" class="hidden" onclick="togglePlay(true)">▶ Play</button>
+            <button id="btn-pause" class="hidden" style="background:var(--danger)" onclick="togglePlay(false)">⏸ Pause</button>
+        </div>
+
+        <div id="host-play-section">
+            <button id="btn-get-ticket" onclick="getHostTicket()">🎟️ Play as Host</button>
+            <div id="host-ticket-container" class="ticket-grid hidden"></div>
+            <div id="host-claims" class="hidden">
+                <button onclick="claim('EARLY_FIVE')">Early 5</button>
+                <button onclick="claim('TOP_ROW')">Top Row</button>
+                <button onclick="claim('MIDDLE_ROW')">Middle Row</button>
+                <button onclick="claim('BOTTOM_ROW')">Bottom Row</button>
+                <button onclick="claim('FULL_HOUSE')">Full House</button>
+            </div>
+        </div>
+
+        <div id="board" class="board-grid"></div>
+    </div>
+
+    <div class="chat-section hidden" id="chat-box">
+        <div class="chat-messages" id="chat-history"></div>
+        <div class="quick-actions">
+            <button class="quick-btn" onclick="sendChat('Waiting for players...')">Waiting...</button>
+            <button class="quick-btn" onclick="sendChat('Game Starting!')">Starting!</button>
+            <button class="quick-btn" onclick="sendChat('Check please!')">Check!</button>
+            <button class="quick-btn" onclick="sendChat('Congratulations!')">Congrats!</button>
         </div>
     </div>
-
-    <div id="board" class="board-grid" style="margin-top: 20px;"></div>
 
     <script src="js/host.js"></script>
 </body>

@@ -4,16 +4,39 @@ const name = params.get('name');
 const gameCode = params.get('code');
 
 let myTicket = [];
-let calledNumbersList = []; // Stores valid numbers
+let calledNumbersList = [];
 
-// Join Logic
 socket.emit('joinGame', { gameCode, name });
 
+// 1. Initial Render & Sync
 socket.on('joinedSuccess', (data) => {
     myTicket = data.ticket;
-    calledNumbersList = data.calledNumbers || []; // Load history on join
+    calledNumbersList = data.calledNumbers || [];
     renderTicket(myTicket);
-    document.getElementById('status').innerText = `Joined Game: ${gameCode}`;
+    renderBoard(); // Render empty 1-90 board
+    
+    // Mark numbers that were already called
+    calledNumbersList.forEach(num => {
+        document.getElementById(`board-${num}`).classList.add('active');
+    });
+
+    document.getElementById('status').innerText = `Room: ${gameCode}`;
+});
+
+// 2. Player List Sync
+socket.on('updatePlayerList', (players) => {
+    const container = document.getElementById('players-list');
+    container.innerHTML = '';
+    players.forEach(p => {
+        const initial = p.name.charAt(0).toUpperCase();
+        const html = `
+            <div class="player-icon">
+                <div class="avatar">${initial}</div>
+                <div class="player-name">${p.name}</div>
+            </div>
+        `;
+        container.innerHTML += html;
+    });
 });
 
 socket.on('gameStarted', () => {
@@ -23,62 +46,66 @@ socket.on('gameStarted', () => {
 
 socket.on('numberDrawn', ({ number, history }) => {
     document.getElementById('current-num-display').innerText = number;
-    
-    // Update local list of valid numbers
-    calledNumbersList = history; 
-    
+    calledNumbersList = history;
+
+    // Update 1-90 Board
+    const cell = document.getElementById(`board-${number}`);
+    if(cell) cell.classList.add('active');
+
     speakNumber(number);
 });
+
+// 3. Chat Logic
+socket.on('receiveChat', ({ message, playerName }) => {
+    const box = document.getElementById('chat-history');
+    const div = document.createElement('div');
+    div.className = 'chat-msg';
+    div.innerHTML = `<strong>${playerName}:</strong> ${message}`;
+    box.appendChild(div);
+    box.scrollTop = box.scrollHeight;
+});
+
+function sendChat(msg) {
+    socket.emit('sendChat', { gameCode, message: msg, playerName: name });
+}
 
 socket.on('claimSuccess', ({ player, type }) => {
     alert(`🎉 ${player} won ${type}!`);
 });
 
-socket.on('claimFailed', (msg) => alert(`❌ ${msg}`));
-socket.on('error', (msg) => alert(msg));
-
-// --- Helpers ---
+// --- Renders ---
 
 function renderTicket(ticket) {
     const container = document.getElementById('ticket-container');
     container.innerHTML = '';
-    
-    ticket.forEach((row) => {
-        row.forEach((num) => {
+    ticket.forEach(row => {
+        row.forEach(num => {
             const div = document.createElement('div');
             div.className = 'cell';
-            div.id = `cell-${num}`;
-            
-            if (num === 0) {
-                div.classList.add('empty');
-            } else {
+            if(num===0) div.classList.add('empty');
+            else {
                 div.innerText = num;
-                // 👇 Pass the number to the toggle function
-                div.onclick = () => toggleMark(div, num);
-                div.style.cursor = 'pointer'; 
+                div.onclick = () => {
+                    if(calledNumbersList.includes(num)) div.classList.toggle('marked');
+                    else alert("Cheat? Not called yet!");
+                };
             }
             container.appendChild(div);
         });
     });
 }
 
-function toggleMark(element, number) {
-    // 👇 CHECK: Only allow marking if number is in the called list
-    if (calledNumbersList.includes(number)) {
-        element.classList.toggle('marked');
-    } else {
-        alert(`⚠️ Cheating? Number ${number} hasn't been called yet!`);
-        // Optional: Add a CSS class to shake the box red for visual feedback
-        element.style.borderColor = 'red';
-        setTimeout(() => element.style.borderColor = '', 500);
+function renderBoard() {
+    const board = document.getElementById('board');
+    board.innerHTML = '';
+    for(let i=1; i<=90; i++) {
+        const div = document.createElement('div');
+        div.className = 'board-cell';
+        div.id = `board-${i}`;
+        div.innerText = i;
+        board.appendChild(div);
     }
 }
 
-function claim(type) {
-    socket.emit('claimPrize', { gameCode, type });
-}
-
-function speakNumber(num) {
-    const utterance = new SpeechSynthesisUtterance(`Number ${num}`);
-    window.speechSynthesis.speak(utterance);
-}
+function claim(type) { socket.emit('claimPrize', { gameCode, type }); }
+function speakNumber(n) { const u = new SpeechSynthesisUtterance(n); window.speechSynthesis.speak(u); }
