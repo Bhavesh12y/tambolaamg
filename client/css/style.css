@@ -1,0 +1,261 @@
+/* ===============================
+   PROFESSIONAL DARK UI THEME
+   =============================== */
+
+/* ---------- ROOT THEME ---------- */
+:root {
+    --bg-gradient: linear-gradient(135deg, #0b0d13 0%, #111827 60%, #0b0d13 100%);
+
+    --card-bg: rgba(20, 24, 36, 0.75);
+    --card-border: 1px solid rgba(255, 255, 255, 0.08);
+
+    --text-pop: #f9fafb;
+    --text-dim: #9ca3af;
+
+    --accent: #6366f1;
+    --accent-soft: rgba(99, 102, 241, 0.15);
+
+    --btn-gradient: linear-gradient(135deg, #6366f1, #818cf8);
+
+    --cell-bg: rgba(31, 41, 55, 0.9);
+    --cell-border: rgba(255, 255, 255, 0.08);
+
+    --cell-marked: #6366f1;
+    --cell-marked-glow: 0 0 18px rgba(99, 102, 241, 0.6);
+    --cell-marked-text: #ffffff;
+}
+
+/* ---------- BASE ---------- */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 20px;
+    min-height: 100vh;
+    font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+    background: var(--bg-gradient);
+    background-attachment: fixed;
+    color: var(--text-pop);
+    text-align: center;
+}
+
+/* ---------- HEADINGS ---------- */
+h1, h2, h3 {
+    margin-bottom: 15px;
+    font-weight: 500;
+    letter-spacing: 0.4px;
+    color: var(--text-pop);
+}
+
+h2, h3 {
+    color: var(--text-dim);
+}
+
+/* ---------- CARDS ---------- */
+.container,
+.card {
+    max-width: 680px;
+    margin: 0 auto 25px;
+    padding: 30px;
+    background: var(--card-bg);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 18px;
+    border: var(--card-border);
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.55);
+}
+
+/* ---------- INPUT ---------- */
+input[type="text"] {
+    width: 80%;
+    padding: 14px 22px;
+    font-size: 1rem;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(0, 0, 0, 0.35);
+    color: var(--text-pop);
+    outline: none;
+    transition: 0.25s ease;
+    text-align: center;
+}
+
+input[type="text"]:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+/* ---------- BUTTONS ---------- */
+button {
+    margin: 10px;
+    padding: 14px 26px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-radius: 14px;
+    border: none;
+    cursor: pointer;
+    color: white;
+    background: var(--btn-gradient);
+    box-shadow: 0 8px 18px rgba(99, 102, 241, 0.35);
+    transition: all 0.25s ease;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(99, 102, 241, 0.5);
+}
+
+button:active {
+    transform: scale(0.97);
+}
+
+button:disabled {
+    background: #374151;
+    color: #9ca3af;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+/* ---------- TICKET GRID ---------- */
+.ticket-grid {
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    gap: 8px;
+    padding: 18px;
+    border-radius: 18px;
+    background: rgba(0, 0, 0, 0.3);
+    border: var(--card-border);
+    margin: 25px auto;
+    max-width: 720px;
+}
+
+/* ---------- CELLS ---------- */
+.cell {
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--cell-bg);
+    color: var(--text-pop);
+    font-weight: 600;
+    font-size: 1.15rem;
+    border-radius: 10px;
+    border: 1px solid var(--cell-border);
+    transition: 0.25s ease;
+    user-select: none;
+}
+
+.cell.empty {
+    background: transparent;
+    border: 1px dashed rgba(255, 255, 255, 0.12);
+}
+
+.cell:not(.empty) {
+    cursor: pointer;
+}
+
+.cell:not(.empty):hover {
+    background: rgba(99, 102, 241, 0.85);
+    transform: translateY(-2px);
+}
+
+/* ---------- MARKED CELL ---------- */
+.cell.marked {
+    background: var(--cell-marked);
+    color: var(--cell-marked-text);
+    box-shadow: var(--cell-marked-glow);
+    transform: scale(1.05);
+    border-radius: 12px;
+}
+
+/* ---------- HOST BOARD ---------- */
+.board-grid {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 6px;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.35);
+    border-radius: 18px;
+    border: var(--card-border);
+    max-width: 600px;
+    margin: 20px auto;
+}
+
+.board-cell {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.04);
+    color: rgba(255, 255, 255, 0.35);
+    font-size: 0.85rem;
+    border-radius: 8px;
+    transition: 0.25s ease;
+}
+
+.board-cell.active {
+    background: var(--accent);
+    color: white;
+    font-weight: 600;
+    box-shadow: 0 0 14px rgba(99, 102, 241, 0.6);
+    transform: scale(1.2);
+    border-radius: 50%;
+}
+
+/* ---------- CURRENT NUMBER ---------- */
+#current-number,
+#current-num-display {
+    font-size: 6rem;
+    font-weight: 900;
+    margin: 15px 0;
+    background: linear-gradient(180deg, #ffffff, #c7d2fe);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 12px rgba(99, 102, 241, 0.4));
+}
+
+/* ---------- STATUS ---------- */
+#status {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--accent);
+}
+
+/* ---------- UTILS ---------- */
+.hidden {
+    display: none !important;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin: 25px 0;
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 600px) {
+    .container,
+    .card {
+        padding: 20px;
+        width: 95%;
+    }
+
+    input[type="text"] {
+        width: 95%;
+    }
+
+    .cell {
+        height: 44px;
+        font-size: 1rem;
+    }
+
+    #current-number {
+        font-size: 4.5rem;
+    }
+
+    button {
+        padding: 12px 20px;
+        font-size: 0.9rem;
+    }
+}

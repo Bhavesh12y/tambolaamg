@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AMG ka TAMBOLA</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <h1>AMG KA TAMBOLA</h1>
+    <div class="container">
+        <div class="card">
+            <h2>Start Playing</h2>
+            <button onclick="window.location.href='host.html'">Host a Game</button>
+            <hr>
+            <input type="text" id="playerName" placeholder="Your Name">
+            <input type="text" id="gameCode" placeholder="Game Code">
+            <button onclick="joinGame()">Join Game</button>
+        </div>
+    </div>
+    <script>
+        function joinGame() {
+            const name = document.getElementById('playerName').value;
+            const code = document.getElementById('gameCode').value;
+            if(name && code) {
+                window.location.href = `player.html?code=${code}&name=${name}`;
+            } else {
+                alert("Enter name and code!");
+            }
+        }
+    </script>
+</body>
+</html>
